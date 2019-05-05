@@ -16,7 +16,7 @@ class IssDashboardContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-    iss_position: {"latitude": "51.2850", "longitude": "161.5840"}
+    iss_position: {"latitude": "-4.9413", "longitude": "58.8674"}
 });
 
 const mapDispatchToProps = dispatch => ({
