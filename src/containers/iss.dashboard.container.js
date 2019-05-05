@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import React, {Component} from 'react';
-import {refreshIssPositionAction} from "../store/actions";
+import {fetchIssPositionAction} from "../store/actions";
 import IssDashboard from "../components/iss.dashboard";
 
 class IssDashboardContainer extends Component {
@@ -20,7 +20,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    refreshIssPosition: () => dispatch(refreshIssPositionAction())
+    refreshIssPosition: () => dispatch(fetchIssPositionAction())
 });
 
 export default connect(

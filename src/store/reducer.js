@@ -9,8 +9,8 @@ const reducer = combineReducers({
 });
 
 export const reducerPreloadedState = {
-    ...issReducerPreloadedState,
-    ...meteorReducerPreloadedState
-}
+    issReducer: issReducerPreloadedState,
+    meteorReducer: meteorReducerPreloadedState
+};
 
 export default reducer;
