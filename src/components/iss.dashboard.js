@@ -19,19 +19,32 @@ class IssDashboard extends Component {
     constructor(props, context) {
         super(props, context);
 
-        this.handleClick = this.handleClick.bind(this);
+        this.handleRefreshClick = this.handleRefreshClick.bind(this);
+        this.handleAutomaticRefreshClick = this.handleAutomaticRefreshClick.bind(this);
 
         this.state = {
             latitude: this.props.iss_position.latitude,
             longitude: this.props.iss_position.longitude,
-            zoom: 2
+            zoom: 2,
+            automaticRefresh: false
         };
 
         this.props.refreshIssPosition();
+
+        setInterval(() => {
+                if (this.state.automaticRefresh) {
+                    this.props.refreshIssPosition()
+                }
+            }, 1000
+        );
     }
 
-    handleClick() {
+    handleRefreshClick() {
         this.props.refreshIssPosition();
+    }
+
+    handleAutomaticRefreshClick() {
+        this.setState({...this.state, automaticRefresh: !this.state.automaticRefresh});
     }
 
     render() {
@@ -53,14 +66,18 @@ class IssDashboard extends Component {
                             </Popup>
                         </Marker>
                     </Map>
-                    <Button variant="primary" onClick={this.handleClick}>
+                    <Button variant="primary" onClick={this.handleRefreshClick}>
                         Refresh Position
+                    </Button>
+                    <Button variant="primary"
+                            onClick={this.handleAutomaticRefreshClick}>
+                        Automatic refresh
                     </Button>
                 </div>
             );
         }
 
-        return <div></div>
+        return ""
 
     }
 
@@ -68,8 +85,8 @@ class IssDashboard extends Component {
 
 IssDashboard.propTypes = {
     iss_position: PropTypes.shape({
-        latitude: PropTypes.string.isRequired,
-        longitude: PropTypes.string.isRequired
+        latitude: PropTypes.string,
+        longitude: PropTypes.string
     }),
     refreshIssPosition: PropTypes.func.isRequired
 };
