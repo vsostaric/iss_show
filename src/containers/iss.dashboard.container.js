@@ -8,7 +8,7 @@ class IssDashboardContainer extends Component {
     render() {
         return (
             <div>
-                <IssDashboard iss_position={this.props.iss_position}/>
+                <IssDashboard {...this.props} />
             </div>
         );
     }
@@ -16,11 +16,11 @@ class IssDashboardContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-    iss_position: {"latitude": "-4.9413", "longitude": "58.8674"}
+    iss_position: {"latitude": state.issReducer.latitude, "longitude": state.issReducer.longitude}
 });
 
 const mapDispatchToProps = dispatch => ({
-    refreshIssPosition: id => dispatch(refreshIssPositionAction())
+    refreshIssPosition: () => dispatch(refreshIssPositionAction())
 });
 
 export default connect(
