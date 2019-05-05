@@ -1,12 +1,11 @@
 import {FETCH_ISS_POSITION, refreshIssPositionAction} from "../actions";
-import {takeLatest, call, put} from 'redux-saga/effects'
+import {call, put, takeLatest} from 'redux-saga/effects'
 import {fetchIssPosition} from "../../services/iss.service"
 
 export function* fetchIssPositionSaga() {
 
     const position = yield call(fetchIssPosition);
     yield put(refreshIssPositionAction(position));
-    console.log(position);
 
 }
 

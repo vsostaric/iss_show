@@ -6,7 +6,7 @@ const meteorReducer = (state, action) => {
 
     switch (action.type) {
         case REFRESH_METEOR_DATA:
-            return {...state};
+            return {meteor_data: action.meteor_data};
         default:
             return {...state}
     }
