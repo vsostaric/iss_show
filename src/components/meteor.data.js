@@ -10,10 +10,10 @@ class MeteorData extends Component {
     }
 
     render() {
-        if (this.props.meteor_data) {
-            return "hi"
+        if (!this.props.meteor_data) {
+            return ""
         }
-        return "";
+        return "hi";
     }
 
 }

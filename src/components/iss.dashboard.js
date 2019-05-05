@@ -48,41 +48,40 @@ class IssDashboard extends Component {
     }
 
     render() {
-        if (this.props.iss_position.latitude && this.props.iss_position.latitude) {
-            const position = [this.props.iss_position.latitude, this.props.iss_position.longitude];
+        if (!this.props.iss_position.latitude || !this.props.iss_position.latitude) {
+            return "";
+        }
 
-            return (
-                <div>
-                    <Map center={position} zoom={this.state.zoom}>
-                        <TileLayer
-                            attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
-                        <Marker position={position}>
-                            <Popup>
-                                ISS Position
-                                <br/> latitude: {position[0]}
-                                <br/> longitude: {position[1]}
-                            </Popup>
-                        </Marker>
-                    </Map>
-                    <span className="issDashboardButton">
+        const position = [this.props.iss_position.latitude, this.props.iss_position.longitude];
+        return (
+            <div>
+                <Map center={position} zoom={this.state.zoom}>
+                    <TileLayer
+                        attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <Marker position={position}>
+                        <Popup>
+                            ISS Position
+                            <br/> latitude: {position[0]}
+                            <br/> longitude: {position[1]}
+                        </Popup>
+                    </Marker>
+                </Map>
+                <span className="issDashboardButton">
                         <Button variant="primary" onClick={this.handleRefreshClick}
                                 disabled={this.state.automaticRefresh}>
                             Refresh Position
                         </Button>
                     </span>
-                    <span className="issDashboardButton">
+                <span className="issDashboardButton">
                         <Button variant={this.state.automaticRefresh ? "primary" : "secondary"}
                                 onClick={this.handleAutomaticRefreshClick}>
                             Automatic refresh
                         </Button>
                     </span>
-                </div>
-            );
-        }
-
-        return ""
+            </div>
+        );
 
     }
 
