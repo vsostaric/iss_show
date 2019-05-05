@@ -6,7 +6,7 @@ export const fetchIssPositionAction = () => ({
     type: FETCH_ISS_POSITION
 });
 
-export const refreshIssPositionAction = () => ({
+export const refreshIssPositionAction = (position) => ({
     type: REFRESH_ISS_POSITION,
-    "latitude": "41.2850", "longitude": "141.5840"
+    position: position.iss_position
 });

@@ -6,8 +6,7 @@ import { watchAIssSaga } from './sagas/iss.saga'
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = createStore(reducer, reducerPreloadedState, applyMiddleware(sagaMiddleware));
-
-sagaMiddleware.run(watchAIssSaga)
+sagaMiddleware.run(watchAIssSaga);
 
 console.log(store)
 console.log(store.getState())

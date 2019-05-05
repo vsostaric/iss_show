@@ -33,7 +33,7 @@ class IssDashboard extends Component {
     }
 
     render() {
-        const position = [this.state.latitude, this.state.longitude];
+        const position = [this.props.iss_position.latitude, this.props.iss_position.longitude];
         const {isLoading} = this.state;
 
         return (

@@ -8,7 +8,7 @@ const issReducer = (state, action) => {
 
     switch (action.type) {
         case REFRESH_ISS_POSITION:
-            return {...state};
+            return {...action.position};
         default:
             return {...state}
     }
