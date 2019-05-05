@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import IssDashboard from "./components/iss.dashboard";
+import IssDashboardContainer from "./containers/iss.dashboard.container";
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
           Learn React
         </a>
       </header>
+      <IssDashboardContainer />
     </div>
   );
 }
