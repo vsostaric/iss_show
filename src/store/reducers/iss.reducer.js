@@ -1,8 +1,6 @@
 import {REFRESH_ISS_POSITION} from "../actions";
 
-export const preloadedState = {
-    "latitude": "-4.9413", "longitude": "58.8674"
-};
+export const preloadedState = {};
 
 const issReducer = (state, action) => {
 
