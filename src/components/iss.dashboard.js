@@ -66,13 +66,18 @@ class IssDashboard extends Component {
                             </Popup>
                         </Marker>
                     </Map>
-                    <Button variant="primary" onClick={this.handleRefreshClick}>
-                        Refresh Position
-                    </Button>
-                    <Button variant="primary"
-                            onClick={this.handleAutomaticRefreshClick}>
-                        Automatic refresh
-                    </Button>
+                    <span className="issDashboardButton">
+                        <Button variant="primary" onClick={this.handleRefreshClick}
+                                disabled={this.state.automaticRefresh}>
+                            Refresh Position
+                        </Button>
+                    </span>
+                    <span className="issDashboardButton">
+                        <Button variant={this.state.automaticRefresh ? "primary" : "secondary"}
+                                onClick={this.handleAutomaticRefreshClick}>
+                            Automatic refresh
+                        </Button>
+                    </span>
                 </div>
             );
         }
