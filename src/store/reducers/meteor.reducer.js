@@ -1,6 +1,6 @@
 import {REFRESH_METEOR_DATA, REFRESH_METEOR_YEAR_GROUP_DATA} from "../actions";
 
-export const preloadedState = {};
+export const preloadedState = {meteor_year_groups: []};
 
 const meteorReducer = (state, action) => {
 
