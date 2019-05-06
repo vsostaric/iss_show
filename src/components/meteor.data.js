@@ -36,9 +36,10 @@ class MeteorData extends Component {
         const chart = svg.append('g')
             .attr('transform', `translate(${margin}, ${margin})`);
 
+        const yMargin = this.props.maxCount * 0.2;
         const yScale = d3.scaleLinear()
             .range([height, 0])
-            .domain([0, 20]);
+            .domain([0, this.props.maxCount + yMargin]);
 
         chart.append('g')
             .call(d3.axisLeft(yScale));
@@ -50,7 +51,13 @@ class MeteorData extends Component {
 
         chart.append('g')
             .attr('transform', `translate(0, ${height})`)
-            .call(d3.axisBottom(xScale));
+            .call(
+                d3.axisBottom(xScale).tickValues(xScale.domain().filter(function (d, i) {
+                    return !(i % 10)
+                }))
+            );
+
+        const {closestYear} = this.props;
 
         chart.selectAll()
             .data(this.props.meteor_year_groups)
@@ -60,6 +67,10 @@ class MeteorData extends Component {
             .attr('y', (s) => yScale(s.count))
             .attr('height', (s) => height - yScale(s.count))
             .attr('width', xScale.bandwidth())
+            .attr("font-size", 8)
+            .attr("class", function (d, i) {
+                return d.year === closestYear ? "bar_Pashtun" : ""
+            })
 
     }
 }

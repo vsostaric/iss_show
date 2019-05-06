@@ -10,8 +10,10 @@ div#container {
     width: 1000px;
     height: 600px;
     margin: auto;
-    background-color: #2F4A6D;
+    background-color: #007bff;
 }
+
+.bar_Pashtun { fill: red }
 
 svg {
     width: 100%;
@@ -38,7 +40,6 @@ line {
 line#limit {
     stroke: #FED966;
     stroke-width: 3;
-    stroke-dasharray: 3 6;
 }
 
 .grid path {

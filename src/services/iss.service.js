@@ -8,3 +8,7 @@ export const fetchIssPosition = () => {
             console.log(error);
         });
 };
+
+export const findYearWithClosestMeteor = (position, meteor_data) => {
+    return "1966";
+};

@@ -17,7 +17,9 @@ class MeteorDataContainer extends Component {
 
 const mapStateToProps = state => ({
     meteor_data: state.meteorReducer.meteor_data,
-    meteor_year_groups: state.meteorReducer.meteor_year_groups
+    meteor_year_groups: state.meteorReducer.meteor_year_groups,
+    maxCount: state.meteorReducer.maxCount,
+    closestYear: state.issReducer.closestYear
 });
 
 const mapDispatchToProps = dispatch => ({
