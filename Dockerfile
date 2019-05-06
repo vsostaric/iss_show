@@ -1,12 +1,12 @@
-FROM node:9.6.1
+# Stage 1
+FROM node:8 as react-build
+WORKDIR /app
+COPY . ./
+RUN yarn
+RUN yarn build
 
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
-
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
-
-COPY package.json /usr/src/app/package.json
-RUN npm install --silent
-RUN npm install react-scripts@1.1.1 -g --silent
-
-CMD ["npm", "start"]
+# Stage 2 - the production environment
+FROM nginx:alpine
+COPY --from=react-build /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
