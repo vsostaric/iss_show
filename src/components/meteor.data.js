@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from "prop-types";
-import rd3 from 'react-d3-library';
 import "./meteor.data.css"
 import * as d3 from "d3";
 
@@ -11,15 +10,15 @@ class MeteorData extends Component {
         this.props.refreshMeteorData();
     }
 
-    componentDidMount() {
+    componentDidUpdate() {
         this.drawBarChart();
     }
 
     render() {
 
         return (
-            <div className="layout">
-                <div className="container">
+            <div id='layout'>
+                <div id='container'>
                     <svg/>
                 </div>
             </div>
@@ -28,32 +27,92 @@ class MeteorData extends Component {
 
     drawBarChart() {
 
-        const svgWidth = 500;
-        const svgHeight = 300;
-        const svg = d3.select('svg')
-            .attr("width", svgWidth)
-            .attr("height", svgHeight)
-            .attr("class", "bar-chart");
+        const sample = [
+            {
+                language: 'Rust',
+                value: 78.9,
+                color: '#000000'
+            },
+            {
+                language: 'Kotlin',
+                value: 75.1,
+                color: '#00a2ee'
+            },
+            {
+                language: 'Python',
+                value: 68.0,
+                color: '#fbcb39'
+            },
+            {
+                language: 'TypeScript',
+                value: 67.0,
+                color: '#007bc8'
+            },
+            {
+                language: 'Go',
+                value: 65.6,
+                color: '#65cedb'
+            },
+            {
+                language: 'Swift',
+                value: 65.1,
+                color: '#ff6e52'
+            },
+            {
+                language: 'JavaScript',
+                value: 61.9,
+                color: '#f9de3f'
+            },
+            {
+                language: 'C#',
+                value: 60.4,
+                color: '#5d2f8e'
+            },
+            {
+                language: 'F#',
+                value: 59.6,
+                color: '#008fc9'
+            },
+            {
+                language: 'Clojure',
+                value: 59.6,
+                color: '#507dca'
+            }
+        ];
 
-        const dataset = [80, 100, 56, 120, 180, 30, 40, 120, 160];
+        const margin = 60;
+        const width = 1000 - 2 * margin;
+        const height = 600 - 2 * margin;
 
-        const barPadding = 5;
-        const barWidth = (svgWidth / dataset.length);
-        const barChart = svg.selectAll("rect")
-            .data(dataset)
+        const svg = d3.select('svg');
+
+        const chart = svg.append('g')
+            .attr('transform', `translate(${margin}, ${margin})`);
+
+        const yScale = d3.scaleLinear()
+            .range([height, 0])
+            .domain([0, 100]);
+
+        chart.append('g')
+            .call(d3.axisLeft(yScale));
+
+        const xScale = d3.scaleBand()
+            .range([0, width])
+            .domain(sample.map((s) => s.language))
+            .padding(0.2)
+
+        chart.append('g')
+            .attr('transform', `translate(0, ${height})`)
+            .call(d3.axisBottom(xScale));
+
+        chart.selectAll()
+            .data(sample)
             .enter()
-            .append("rect")
-            .attr("y", function (d) {
-                return svgHeight - d
-            })
-            .attr("height", function (d) {
-                return d;
-            })
-            .attr("width", barWidth - barPadding)
-            .attr("transform", function (d, i) {
-                var translate = [barWidth * i, 0];
-                return "translate(" + translate + ")";
-            });
+            .append('rect')
+            .attr('x', (s) => xScale(s.language))
+            .attr('y', (s) => yScale(s.value))
+            .attr('height', (s) => height - yScale(s.value))
+            .attr('width', xScale.bandwidth())
 
     }
 }
@@ -74,6 +133,7 @@ MeteorData.propTypes = {
         reclong: PropTypes.string,
         year: PropTypes.string,
     })),
+    meteor_year_groups: PropTypes.array,
     refreshMeteorData: PropTypes.func.isRequired
 };
 
