@@ -24,8 +24,8 @@ class IssDashboard extends Component {
         this.handleShowMeteorsClick = this.handleShowMeteorsClick.bind(this);
 
         this.state = {
-            latitude: this.props.iss_position.latitude,
-            longitude: this.props.iss_position.longitude,
+            map_latitude: this.props.iss_position.latitude,
+            map_longitude: this.props.iss_position.longitude,
             zoom: 2,
             automaticRefresh: false,
             showMeteors: false
@@ -54,23 +54,21 @@ class IssDashboard extends Component {
     }
 
     render() {
-        if (!this.props.iss_position.latitude || !this.props.iss_position.latitude) {
-            return "";
-        }
+        const iss_position = [this.props.iss_position.latitude, this.props.iss_position.longitude];
+        const map_position = [this.state.map_latitude, this.state.map_longitude];
 
-        const position = [this.props.iss_position.latitude, this.props.iss_position.longitude];
         return (
             <div>
-                <Map center={position} zoom={this.state.zoom}>
+                <Map center={map_position} zoom={this.state.zoom}>
                     <TileLayer
                         attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
-                    <Marker position={position}>
+                    <Marker position={iss_position}>
                         <Popup>
                             ISS Position
-                            <br/> latitude: {position[0]}
-                            <br/> longitude: {position[1]}
+                            <br/> latitude: {iss_position[0]}
+                            <br/> longitude: {iss_position[1]}
                         </Popup>
                     </Marker>
                     {this.renderMeteors()}
@@ -103,17 +101,24 @@ class IssDashboard extends Component {
             return (
                 this.props.meteor_data.filter(data => data && data.geolocation && data.geolocation.coordinates)
                     .map(function (item, i) {
-                        return <Marker opacity="0.5" key={i} position={item.geolocation.coordinates}></Marker>
+                        return <Marker opacity="0.5" key={i} position={item.geolocation.coordinates}>
+                            <Popup>
+                                Meteor {item.id}
+                                <br/> name: {item.name}
+                                <br/> year of impact: {new Date(item.year).getFullYear()}
+                            </Popup>
+                        </Marker>
                     })
             )
         }
     }
+
 }
 
 IssDashboard.propTypes = {
     iss_position: PropTypes.shape({
-        latitude: PropTypes.string,
-        longitude: PropTypes.string
+        latitude: PropTypes.string.isRequired,
+        longitude: PropTypes.string.isRequired
     }),
     refreshIssPosition: PropTypes.func.isRequired
 };

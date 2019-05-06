@@ -71,7 +71,7 @@ class MeteorData extends Component {
             .attr('height', (s) => height - yScale(s.count))
             .attr('width', xScale.bandwidth())
             .attr("font-size", 8)
-            .attr("class", function (d, i) {
+            .attr("class", function (d) {
                 return d.year === closestYear ? "closestYearGroup" : ""
             })
 
