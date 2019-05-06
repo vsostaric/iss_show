@@ -6,6 +6,10 @@ div#layout {
     text-align: center;
 }
 
+div#closestYearHolder {
+    color: red;
+}
+
 div#container {
     width: 1000px;
     height: 600px;
@@ -13,7 +17,9 @@ div#container {
     background-color: #007bff;
 }
 
-.bar_Pashtun { fill: red }
+.closestYearGroup {
+    fill: red
+}
 
 svg {
     width: 100%;

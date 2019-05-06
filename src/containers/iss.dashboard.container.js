@@ -16,7 +16,8 @@ class IssDashboardContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-    iss_position: {"latitude": state.issReducer.latitude, "longitude": state.issReducer.longitude}
+    iss_position: {"latitude": state.issReducer.latitude, "longitude": state.issReducer.longitude},
+    meteor_data: state.meteorReducer.meteor_data
 });
 
 const mapDispatchToProps = dispatch => ({

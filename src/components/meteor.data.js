@@ -21,6 +21,9 @@ class MeteorData extends Component {
                 <div id='container'>
                     <svg/>
                 </div>
+                <div id="closestYearHolder">
+                    Closest Year: {this.props.closestYear}
+                </div>
             </div>
         );
     }
@@ -69,7 +72,7 @@ class MeteorData extends Component {
             .attr('width', xScale.bandwidth())
             .attr("font-size", 8)
             .attr("class", function (d, i) {
-                return d.year === closestYear ? "bar_Pashtun" : ""
+                return d.year === closestYear ? "closestYearGroup" : ""
             })
 
     }

@@ -21,12 +21,14 @@ class IssDashboard extends Component {
 
         this.handleRefreshClick = this.handleRefreshClick.bind(this);
         this.handleAutomaticRefreshClick = this.handleAutomaticRefreshClick.bind(this);
+        this.handleShowMeteorsClick = this.handleShowMeteorsClick.bind(this);
 
         this.state = {
             latitude: this.props.iss_position.latitude,
             longitude: this.props.iss_position.longitude,
             zoom: 2,
-            automaticRefresh: false
+            automaticRefresh: false,
+            showMeteors: false
         };
 
         this.props.refreshIssPosition();
@@ -45,6 +47,10 @@ class IssDashboard extends Component {
 
     handleAutomaticRefreshClick() {
         this.setState({...this.state, automaticRefresh: !this.state.automaticRefresh});
+    }
+
+    handleShowMeteorsClick() {
+        this.setState({...this.state, showMeteors: !this.state.showMeteors});
     }
 
     render() {
@@ -67,24 +73,41 @@ class IssDashboard extends Component {
                             <br/> longitude: {position[1]}
                         </Popup>
                     </Marker>
+                    {this.renderMeteors()}
                 </Map>
                 <span className="issDashboardButton">
                         <Button variant="primary" onClick={this.handleRefreshClick}
                                 disabled={this.state.automaticRefresh}>
                             Refresh Position
                         </Button>
-                    </span>
+                </span>
                 <span className="issDashboardButton">
                         <Button variant={this.state.automaticRefresh ? "primary" : "secondary"}
                                 onClick={this.handleAutomaticRefreshClick}>
                             Automatic refresh
                         </Button>
                     </span>
+                <span className="issDashboardButton">
+                        <Button variant={this.state.showMeteors ? "primary" : "secondary"}
+                                onClick={this.handleShowMeteorsClick}>
+                            Show meteors
+                        </Button>
+                </span>
             </div>
         );
 
     }
 
+    renderMeteors() {
+        if (this.state.showMeteors) {
+            return (
+                this.props.meteor_data.filter(data => data && data.geolocation && data.geolocation.coordinates)
+                    .map(function (item, i) {
+                        return <Marker opacity="0.5" key={i} position={item.geolocation.coordinates}></Marker>
+                    })
+            )
+        }
+    }
 }
 
 IssDashboard.propTypes = {
