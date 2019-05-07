@@ -16,3 +16,7 @@ h1, h2, p {
 .issDashboardButton {
     margin: 3px;
 }
+
+.colorred {
+    color: red;
+}

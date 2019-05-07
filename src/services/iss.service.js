@@ -9,10 +9,10 @@ export const fetchIssPosition = () => {
         });
 };
 
-export const findYearWithClosestMeteor = (position, meteor_data) => {
+export const findClosestMeteor = (position, meteor_data) => {
 
-    let year = 0;
     let minDistance = Infinity;
+    let closestMeteor = {};
 
     meteor_data.filter(data => data.geolocation && data.geolocation.coordinates)
         .forEach(data => {
@@ -24,11 +24,22 @@ export const findYearWithClosestMeteor = (position, meteor_data) => {
 
             if (distance < minDistance) {
                 minDistance = distance;
-                year = new Date(data.year).getFullYear().toString();
+                closestMeteor = data;
             }
         });
 
-    return year;
+    return closestMeteor;
+};
+
+export const findMaxCount = (meteor_year_groups) => {
+    const counts = meteor_year_groups.map(d => Number(d.count));
+    let maxCount = -Infinity;
+    for (const countIndex in counts) {
+        if (counts[countIndex] > maxCount) {
+            maxCount = counts[countIndex]
+        }
+    }
+    return maxCount;
 };
 
 const calculateDistance = (x1, y1, x2, y2) => {

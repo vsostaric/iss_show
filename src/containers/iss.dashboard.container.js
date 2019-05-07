@@ -17,6 +17,8 @@ class IssDashboardContainer extends Component {
 
 const mapStateToProps = state => ({
     iss_position: {"latitude": state.issReducer.latitude, "longitude": state.issReducer.longitude},
+    closestPosition: state.issReducer.closestPosition,
+    closestName: state.issReducer.closestName,
     meteor_data: state.meteorReducer.meteor_data
 });
 

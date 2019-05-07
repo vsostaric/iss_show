@@ -91,6 +91,9 @@ class IssDashboard extends Component {
                             Show meteors
                         </Button>
                 </span>
+                <div>
+                    Closest meteor name: {this.props.closestName}
+                </div>
             </div>
         );
 
@@ -98,10 +101,11 @@ class IssDashboard extends Component {
 
     renderMeteors() {
         if (this.state.showMeteors) {
+            const closestName = this.props.closestName;
             return (
                 this.props.meteor_data.filter(data => data && data.geolocation && data.geolocation.coordinates)
                     .map(function (item, i) {
-                        return <Marker opacity="0.5" key={i} position={item.geolocation.coordinates}>
+                        return <Marker opacity={item.name === closestName ? "1" : "0.3"} key={i} position={item.geolocation.coordinates}>
                             <Popup>
                                 Meteor {item.id}
                                 <br/> name: {item.name}
@@ -120,6 +124,23 @@ IssDashboard.propTypes = {
         latitude: PropTypes.string.isRequired,
         longitude: PropTypes.string.isRequired
     }),
+    closestPosition: PropTypes.array,
+    closestName: PropTypes.string,
+    meteor_data: PropTypes.arrayOf(PropTypes.shape({
+        fall: PropTypes.string,
+        geolocation: PropTypes.shape({
+            type: PropTypes.string,
+            coordinates: PropTypes.arrayOf(PropTypes.number)
+        }),
+        id: PropTypes.string,
+        mass: PropTypes.string,
+        name: PropTypes.string,
+        nametype: PropTypes.string,
+        recclass: PropTypes.string,
+        reclat: PropTypes.string,
+        reclong: PropTypes.string,
+        year: PropTypes.string,
+    })),
     refreshIssPosition: PropTypes.func.isRequired
 };
 

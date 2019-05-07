@@ -1,11 +1,14 @@
 import {
     FETCH_ISS_POSITION,
     FIND_YEAR_WITH_METEOR_DROP_CLOSEST_TO_ISS,
-    findYearWithMeteorDropClosestToIssAction, refreshClosestYearAction,
+    findYearWithMeteorDropClosestToIssAction,
+    refreshClosestMeteorNameAction,
+    refreshClosestMeteorPositionAction,
+    refreshClosestMeteorYearAction,
     refreshIssPositionAction
 } from "../actions";
-import {call, put, takeLatest, select} from 'redux-saga/effects'
-import {fetchIssPosition, findYearWithClosestMeteor} from "../../services/iss.service"
+import {call, put, select, takeLatest} from 'redux-saga/effects'
+import {fetchIssPosition, findClosestMeteor} from "../../services/iss.service"
 
 export function* fetchIssPositionSaga() {
 
@@ -21,9 +24,11 @@ export function* findYearWithMeteorDropClosestToIssSaga(data) {
     const meteor_data = state.meteorReducer.meteor_data;
     const position = data.position.iss_position;
 
-    const closestYear = yield call(findYearWithClosestMeteor, position, meteor_data);
+    const closestMeteor = yield call(findClosestMeteor, position, meteor_data);
 
-    yield put(refreshClosestYearAction(closestYear));
+    yield put(refreshClosestMeteorYearAction(new Date(closestMeteor.year).getFullYear().toString()));
+    yield put(refreshClosestMeteorPositionAction(closestMeteor.geolocation.coordinates));
+    yield put(refreshClosestMeteorNameAction(closestMeteor.name));
 
 }
 

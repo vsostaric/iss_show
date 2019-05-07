@@ -1,6 +1,8 @@
 export const FETCH_ISS_POSITION = 'FETCH_ISS_POSITION';
 export const REFRESH_ISS_POSITION = 'REFRESH_ISS_POSITION';
 export const REFRESH_CLOSEST_YEAR = 'REFRESH_CLOSEST_YEAR';
+export const REFRESH_CLOSEST_POSITION = 'REFRESH_CLOSEST_POSITION';
+export const REFRESH_CLOSEST_NAME = 'REFRESH_CLOSEST_NAME';
 export const FETCH_METEOR_DATA = 'FETCH_METEOR_DATA';
 export const REFRESH_METEOR_DATA = 'REFRESH_METEOR_DATA';
 export const REFRESH_METEOR_YEAR_GROUP_DATA = 'REFRESH_METEOR_YEAR_GROUP_DATA';
@@ -16,9 +18,19 @@ export const refreshIssPositionAction = (position) => ({
     position: position.iss_position
 });
 
-export const refreshClosestYearAction = (closestYear) => ({
+export const refreshClosestMeteorYearAction = (closestYear) => ({
     type: REFRESH_CLOSEST_YEAR,
     closestYear: closestYear
+});
+
+export const refreshClosestMeteorPositionAction = (closestPosition) => ({
+    type: REFRESH_CLOSEST_POSITION,
+    closestPosition: closestPosition
+});
+
+export const refreshClosestMeteorNameAction = (closestName) => ({
+    type: REFRESH_CLOSEST_NAME,
+    closestName: closestName
 });
 
 export const findYearWithMeteorDropClosestToIssAction = (data) => ({
