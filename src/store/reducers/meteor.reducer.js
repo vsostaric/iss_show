@@ -1,6 +1,5 @@
 import {REFRESH_METEOR_DATA, REFRESH_METEOR_YEAR_GROUP_DATA} from "../actions";
-import {findMaxCount} from "../../services/iss.service";
-
+import {findMaxCount} from "../../services/meteor.service";
 export const preloadedState = {meteor_year_groups: []};
 
 const meteorReducer = (state, action) => {

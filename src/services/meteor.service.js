@@ -32,3 +32,14 @@ export const groupMeteorDataByYear = (data) => {
     return groups;
 
 };
+
+export const findMaxCount = (meteor_year_groups) => {
+    const counts = meteor_year_groups.map(d => Number(d.count));
+    let maxCount = -Infinity;
+    for (const countIndex in counts) {
+        if (counts[countIndex] > maxCount) {
+            maxCount = counts[countIndex]
+        }
+    }
+    return maxCount;
+};

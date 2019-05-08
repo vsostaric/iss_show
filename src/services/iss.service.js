@@ -31,17 +31,6 @@ export const findClosestMeteor = (position, meteor_data) => {
     return closestMeteor;
 };
 
-export const findMaxCount = (meteor_year_groups) => {
-    const counts = meteor_year_groups.map(d => Number(d.count));
-    let maxCount = -Infinity;
-    for (const countIndex in counts) {
-        if (counts[countIndex] > maxCount) {
-            maxCount = counts[countIndex]
-        }
-    }
-    return maxCount;
-};
-
 const calculateDistance = (x1, y1, x2, y2) => {
     return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 };
