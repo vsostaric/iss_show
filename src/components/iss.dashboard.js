@@ -54,43 +54,18 @@ class IssDashboard extends Component {
     }
 
     render() {
-        const iss_position = [this.props.iss_position.latitude, this.props.iss_position.longitude];
-        const map_position = [this.state.map_latitude, this.state.map_longitude];
 
         return (
             <div>
-                <Map center={map_position} zoom={this.state.zoom}>
+                <Map center={this.getMapPosition()} zoom={this.state.zoom}>
                     <TileLayer
                         attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
-                    <Marker position={iss_position}>
-                        <Popup>
-                            ISS Position
-                            <br/> latitude: {iss_position[0]}
-                            <br/> longitude: {iss_position[1]}
-                        </Popup>
-                    </Marker>
+                    {this.renderIssPosition()}
                     {this.renderMeteors()}
                 </Map>
-                <span className="issDashboardButton">
-                        <Button variant="primary" onClick={this.handleRefreshClick}
-                                disabled={this.state.automaticRefresh}>
-                            Refresh Position
-                        </Button>
-                </span>
-                <span className="issDashboardButton">
-                        <Button variant={this.state.automaticRefresh ? "primary" : "secondary"}
-                                onClick={this.handleAutomaticRefreshClick}>
-                            Automatic refresh
-                        </Button>
-                    </span>
-                <span className="issDashboardButton">
-                        <Button variant={this.state.showMeteors ? "primary" : "secondary"}
-                                onClick={this.handleShowMeteorsClick}>
-                            Show meteors
-                        </Button>
-                </span>
+                {this.renderButtons()}
                 <div>
                     Closest meteor name: {this.props.closestName}
                 </div>
@@ -99,13 +74,22 @@ class IssDashboard extends Component {
 
     }
 
+    getMapPosition() {
+        if (this.state.map_latitude && this.state.map_longitude) {
+            return [this.state.map_latitude, this.state.map_longitude];
+        }
+
+        return [0, 0];
+    }
+
     renderMeteors() {
         if (this.state.showMeteors) {
             const closestName = this.props.closestName;
             return (
                 this.props.meteor_data.filter(data => data && data.geolocation && data.geolocation.coordinates)
                     .map(function (item, i) {
-                        return <Marker opacity={item.name === closestName ? "1" : "0.3"} key={i} position={item.geolocation.coordinates}>
+                        return <Marker opacity={item.name === closestName ? "1" : "0.3"} key={i}
+                                       position={item.geolocation.coordinates}>
                             <Popup>
                                 Meteor {item.id}
                                 <br/> name: {item.name}
@@ -117,12 +101,52 @@ class IssDashboard extends Component {
         }
     }
 
+    renderIssPosition() {
+
+        if (this.props.iss_position.latitude && this.props.iss_position.longitude) {
+
+            const iss_position = [this.props.iss_position.latitude, this.props.iss_position.longitude];
+            return <Marker position={iss_position}>
+                <Popup>
+                    ISS Position
+                    <br/> latitude: {iss_position[0]}
+                    <br/> longitude: {iss_position[1]}
+                </Popup>
+            </Marker>
+        }
+
+    }
+
+    renderButtons() {
+        return (
+            <div>
+                <span className="issDashboardButton">
+                    <Button variant="primary" onClick={this.handleRefreshClick}
+                            disabled={this.state.automaticRefresh}>
+                        Refresh Position
+                    </Button>
+                </span>
+                <span className="issDashboardButton">
+                    <Button variant={this.state.automaticRefresh ? "primary" : "secondary"}
+                            onClick={this.handleAutomaticRefreshClick}>
+                        Automatic refresh
+                    </Button>
+                </span>
+                <span className="issDashboardButton">
+                <Button variant={this.state.showMeteors ? "primary" : "secondary"}
+                        onClick={this.handleShowMeteorsClick}>
+                Show meteors
+                </Button>
+                </span>
+            </div>
+        )
+    }
 }
 
 IssDashboard.propTypes = {
     iss_position: PropTypes.shape({
-        latitude: PropTypes.string.isRequired,
-        longitude: PropTypes.string.isRequired
+        latitude: PropTypes.string,
+        longitude: PropTypes.string
     }),
     closestPosition: PropTypes.array,
     closestName: PropTypes.string,

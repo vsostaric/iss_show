@@ -1,6 +1,6 @@
 import {REFRESH_CLOSEST_NAME, REFRESH_CLOSEST_POSITION, REFRESH_CLOSEST_YEAR, REFRESH_ISS_POSITION} from "../actions";
 
-export const preloadedState = {latitude: "0", longitude: "0"};
+export const preloadedState = {};
 
 const issReducer = (state, action) => {
 
